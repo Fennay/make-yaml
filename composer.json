@@ -1,0 +1,12 @@
+{
+	"name": "demo",
+	"description": "Demo for Laravel Framework.",
+	"keywords": [],
+	"license": "GPL 2.0",
+	"type": "project",
+	"require": {
+		"symfony/yaml": "^3.3"
+	},
+	"require-dev": {
+	}
+}

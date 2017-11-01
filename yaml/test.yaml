@@ -1,0 +1,18 @@
+version: '2'
+services:
+  lamp367:
+    image: dchub.stnts.com/base/php367:2.3
+    restart: always
+    volumes:
+      - H:\code:/webser/www/code
+      - H:\git_code:/webser/www/git_code
+      - H:\docker\docker_conf/config/nginx:/webser/tengine/conf/vhost
+      - H:\docker\docker_conf/config/php7.ini:/webser/php7/etc/php.ini
+      - H:\docker\docker_conf/config/php53.ini:/webser/php53/etc/php.ini
+      - H:\docker\docker_conf/config/php56.ini:/webser/php56/etc/php.ini
+    ports:
+      - 80:80
+    extra_hosts:
+      - "account.stnts.com:192.168.4.57"
+      - "register.stnts.com:192.68.4.57"
+      - "www.moba.loc:192.168.16.163"
