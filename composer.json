@@ -5,8 +5,12 @@
 	"license": "GPL 2.0",
 	"type": "project",
 	"require": {
-		"symfony/yaml": "^3.3"
+		"symfony/yaml": "^3.3",
+		"mustangostang/spyc": "0.6.2"
 	},
 	"require-dev": {
+	},
+	"autoload": {
+		"files": ["helper/helper.php"]
 	}
 }

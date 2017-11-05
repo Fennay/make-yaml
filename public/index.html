@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Make-yaml</title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .clear-fix {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>Easy To Make Swagger Yaml</h1>
+    </div>
+    <div class="row">
+        <h2>可选内容</h2>
+    </div>
+    <div class="row">
+        <!--Info-->
+        <div class="btn-group">
+            <button type="button" class="btn btn-success" id="Info-btn">Info</button>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:;">description</a></li>
+                <li><a href="javascript:;">version</a></li>
+                <li><a href="javascript:;">title</a></li>
+                <li><a href="javascript:;">termsOfService</a></li>
+                <li><a href="javascript:;">contact</a></li>
+                <li><a href="javascript:;">┗ email </a></li>
+                <li><a href="javascript:;">license</a></li>
+                <li><a href="javascript:;">┣ name</a></li>
+                <li><a href="javascript:;">┗ url</a></li>
+            </ul>
+        </div>
+        <!--host-->
+        <div class="btn-group">
+            <button type="button" class="btn btn-success" id="host-btn">host</button>
+        </div>
+        <!--basePath-->
+        <div class="btn-group">
+            <button type="button" class="btn btn-success" id="basePath-btn">basePath</button>
+        </div>
+        <!--schemes-->
+        <div class="btn-group">
+            <button type="button" class="btn btn-success" id="schemes-btn">schemes</button>
+            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:;">http</a></li>
+                <li><a href="javascript:;">https</a></li>
+            </ul>
+        </div>
+        <!--tags-->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" id="tags-btn">tags <span class="glyphicon glyphicon-plus"
+                                                                                   aria-hidden="true"></span></button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="javascript:;">name</a></li>
+                <li><a href="javascript:;">description</a></li>
+                <li><a href="javascript:;">externalDocs</a></li>
+                <li><a href="javascript:;">┣ description</a></li>
+                <li><a href="javascript:;">┗ url </a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <form action="index.php" method="get">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Swagger</label>
+                <input type="text" class="form-control" id="exampleInputEmail1"
+                       placeholder="2.0" value="2.0">
+                <small id="emailHelp" class="form-text text-muted">请输入Swagger版本，默认为2.0</small>
+            </div>
+            <div class="info col-md-12" style="display: none">
+                <h1>Info</h1>
+            </div>
+            <div class="form-group info col-md-6" style="display: none">
+                <label>version</label>
+                <input type="text" class="form-control" name="info[version]"
+                       placeholder="description">
+                <small class="form-text text-muted">接口版本</small>
+            </div>
+            <div class="form-group info col-md-6" style="display: none">
+                <label>title</label>
+                <input type="text" class="form-control" name="info[title]"
+                       placeholder="description">
+                <small class="form-text text-muted">标题</small>
+            </div>
+            <div class="form-group info col-md-6" style="display: none">
+                <label>termsOfService</label>
+                <input type="text" class="form-control" name="info[termsOfService]"
+                       placeholder="description">
+                <small class="form-text text-muted">termsOfService</small>
+            </div>
+            <div class="form-group info col-md-6" style="display: none">
+                <label>Description</label>
+                <textarea class="form-control" name="info[description]"></textarea>
+                <small class="form-text text-muted">描述</small>
+            </div>
+            <h2 class="info col-md-12" style="display: none">┗ contact</h2>
+            <div class="form-group info col-md-10" style="display: none">
+                <label>email</label>
+                <input type="email" class="form-control" name="info[contact][email]"
+                       placeholder="description">
+                <small class="form-text text-muted">邮箱</small>
+            </div>
+            <h2 class="info col-md-12" style="display: none">┗ license</h2>
+            <div class="form-group info col-md-6" style="display: none">
+                <label>name</label>
+                <input type="name" class="form-control" name="info[license][name]"
+                       placeholder="description">
+                <small class="form-text text-muted">名称</small>
+            </div>
+            <div class="form-group info col-md-6" style="display: none">
+                <label>url</label>
+                <input type="url" class="form-control" name="info[license][url]"
+                       placeholder="description">
+                <small class="form-text text-muted">url</small>
+            </div>
+            <div class="clear-fix"></div>
+            <!--host start-->
+            <div class="form-group" id="host" style="display: none">
+                <label>host</label>
+                <input type="text" class="form-control" name="host"
+                       placeholder="host">
+            </div>
+            <!--basePath-->
+            <div class="form-group" id="basePath" style="display: none">
+                <label>basePath</label>
+                <input type="text" class="form-control" name="basePath"
+                       placeholder="basePath">
+            </div>
+            <!--schemes-->
+            <div class="form-check" id="schemes" style="display: none">
+                <p><label>host</label></p>
+                <label>
+                    <input type="checkbox" name="schemes" value="http"> http
+                </label>
+                <label>
+                    <input type="checkbox" name="schemes" value="https"> https
+                </label>
+            </div>
+            <!--tags start-->
+            <div class="tags-clone" style="display: none">
+                <h1 class="tags" >tags</h1>
+                <div class="form-group tags col-md-6" style="display: none">
+                    <label>name</label>
+                    <input type="name" class="form-control" name="tags[1][name]"
+                           placeholder="description">
+                    <small class="form-text text-muted">名称</small>
+                </div>
+                <div class="form-group tags col-md-6" style="display: none">
+                    <label>description</label>
+                    <input type="description" class="form-control" name="tags[1][description]"
+                           placeholder="description">
+                    <small class="form-text text-muted">名称</small>
+                </div>
+                <h2 class="tags col-md-12" style="display: none">┗ externalDocs</h2>
+                <div class="form-group tags col-md-6" style="display: none">
+                    <label>description</label>
+                    <input type="description" class="form-control" name="tags[1][externalDocs][description]"
+                           placeholder="description">
+                    <small class="form-text text-muted">名称</small>
+                </div>
+                <div class="form-group tags col-md-6" style="display: none">
+                    <label>url</label>
+                    <input type="url" class="form-control" name="tags[1][externalDocs][url]"
+                           placeholder="url">
+                    <small class="form-text text-muted">名称</small>
+                </div>
+            </div>
+
+
+            <div class="clear-fix"></div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script>
+    function showAndHide(selector, op) {
+        $(op).click(function () {
+            if ($(selector).is(':hidden')) {//如果当前隐藏
+                $(selector).show();//那么就显示div
+            } else {//否则
+                $(selector).hide();//就隐藏div
+            }
+        });
+    }
+
+    showAndHide('.info', '#Info-btn');
+    showAndHide('#host', '#host-btn');
+    showAndHide('#basePath', '#basePath-btn');
+    showAndHide('#schemes', '#schemes-btn');
+//    showAndHide('.tags', '#tags-btn');
+
+    $('#tags-btn').click(function () {
+        $('.tags-clone').clone(true).insertAfter('.tags-clone:last-child');
+    });
+
+</script>
+</body>
+</html>
