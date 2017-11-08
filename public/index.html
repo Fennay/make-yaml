@@ -17,6 +17,9 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!--引入switch-->
+    <link rel="stylesheet" href="resource/switch/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="resource/select2/select2.min.css">
     <style>
         .clear-fix {
             clear: both;
@@ -90,6 +93,42 @@
                 <li><a href="javascript:;">┗ url </a></li>
             </ul>
         </div>
+        <div class="btn-group">
+        <button type="button" class="btn btn-default" id="path-btn">paths <span class="glyphicon glyphicon-plus"
+                                                                               aria-hidden="true"></span></button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="javascript:;">path</a></li>
+            <li><a href="javascript:;">type</a></li>
+            <li><a href="javascript:;">┣ post</a></li>
+            <li><a href="javascript:;">┣ get</a></li>
+            <li><a href="javascript:;">┣ put</a></li>
+            <li><a href="javascript:;">┗ delete</a></li>
+            <li><a href="javascript:;">tags</a></li>
+            <li><a href="javascript:;">summary</a></li>
+            <li><a href="javascript:;">description</a></li>
+            <li><a href="javascript:;">operationId</a></li>
+            <li><a href="javascript:;">consumes</a></li>
+            <li><a href="javascript:;">┣ application/json</a></li>
+            <li><a href="javascript:;">┗ application/xml </a></li>
+            <li><a href="javascript:;">produces</a></li>
+            <li><a href="javascript:;">┣ application/json</a></li>
+            <li><a href="javascript:;">┗ application/xml </a></li>
+            <li><a href="javascript:;">parameters</a></li>
+            <li><a href="javascript:;">┣ in</a></li>
+            <li><a href="javascript:;">┣ name</a></li>
+            <li><a href="javascript:;">┣ description</a></li>
+            <li><a href="javascript:;">┣ required</a></li>
+            <li><a href="javascript:;">┗ schema </a></li>
+            <li><a href="javascript:;">responses</a></li>
+            <li><a href="javascript:;">┣ 405</a></li>
+            <li><a href="javascript:;">&nbsp;&nbsp;&nbsp;┗ description</a></li>
+        </ul>
+    </div>
     </div>
     <div class="row">
         <form action="index.php" method="get">
@@ -105,19 +144,19 @@
             <div class="form-group info col-md-6" style="display: none">
                 <label>version</label>
                 <input type="text" class="form-control" name="info[version]"
-                       placeholder="description">
+                       placeholder="version">
                 <small class="form-text text-muted">接口版本</small>
             </div>
             <div class="form-group info col-md-6" style="display: none">
                 <label>title</label>
                 <input type="text" class="form-control" name="info[title]"
-                       placeholder="description">
+                       placeholder="title">
                 <small class="form-text text-muted">标题</small>
             </div>
             <div class="form-group info col-md-6" style="display: none">
                 <label>termsOfService</label>
                 <input type="text" class="form-control" name="info[termsOfService]"
-                       placeholder="description">
+                       placeholder="termsOfService">
                 <small class="form-text text-muted">termsOfService</small>
             </div>
             <div class="form-group info col-md-6" style="display: none">
@@ -129,20 +168,20 @@
             <div class="form-group info col-md-10" style="display: none">
                 <label>email</label>
                 <input type="email" class="form-control" name="info[contact][email]"
-                       placeholder="description">
+                       placeholder="email">
                 <small class="form-text text-muted">邮箱</small>
             </div>
             <h2 class="info col-md-12" style="display: none">┗ license</h2>
             <div class="form-group info col-md-6" style="display: none">
                 <label>name</label>
                 <input type="name" class="form-control" name="info[license][name]"
-                       placeholder="description">
+                       placeholder="name">
                 <small class="form-text text-muted">名称</small>
             </div>
             <div class="form-group info col-md-6" style="display: none">
                 <label>url</label>
                 <input type="url" class="form-control" name="info[license][url]"
-                       placeholder="description">
+                       placeholder="url">
                 <small class="form-text text-muted">url</small>
             </div>
             <div class="clear-fix"></div>
@@ -169,33 +208,12 @@
                 </label>
             </div>
             <!--tags start-->
-            <div class="tags-clone" style="display: none">
-                <h1 class="tags" >tags</h1>
-                <div class="form-group tags col-md-6" style="display: none">
-                    <label>name</label>
-                    <input type="name" class="form-control" name="tags[1][name]"
-                           placeholder="description">
-                    <small class="form-text text-muted">名称</small>
-                </div>
-                <div class="form-group tags col-md-6" style="display: none">
-                    <label>description</label>
-                    <input type="description" class="form-control" name="tags[1][description]"
-                           placeholder="description">
-                    <small class="form-text text-muted">名称</small>
-                </div>
-                <h2 class="tags col-md-12" style="display: none">┗ externalDocs</h2>
-                <div class="form-group tags col-md-6" style="display: none">
-                    <label>description</label>
-                    <input type="description" class="form-control" name="tags[1][externalDocs][description]"
-                           placeholder="description">
-                    <small class="form-text text-muted">名称</small>
-                </div>
-                <div class="form-group tags col-md-6" style="display: none">
-                    <label>url</label>
-                    <input type="url" class="form-control" name="tags[1][externalDocs][url]"
-                           placeholder="url">
-                    <small class="form-text text-muted">名称</small>
-                </div>
+            <div id="tags-clone">
+
+            </div>
+            <!--path start-->
+            <div id="path-clone">
+
             </div>
 
 
@@ -211,7 +229,13 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+<!--引入switch-->
+<script src="resource/switch/bootstrap-switch.min.js"></script>
+<script src="resource/select2/select2.full.min.js"></script>
 <script>
+    // switch
+
+
     function showAndHide(selector, op) {
         $(op).click(function () {
             if ($(selector).is(':hidden')) {//如果当前隐藏
@@ -226,11 +250,132 @@
     showAndHide('#host', '#host-btn');
     showAndHide('#basePath', '#basePath-btn');
     showAndHide('#schemes', '#schemes-btn');
-//    showAndHide('.tags', '#tags-btn');
 
+    var tagNum = 0;
     $('#tags-btn').click(function () {
-        $('.tags-clone').clone(true).insertAfter('.tags-clone:last-child');
+        tagsAdd(tagNum);
+        tagNum++;
     });
+
+    var pathNum = 0;
+    $('#path-btn').click(function () {
+        pathAdd(pathNum);
+        pathNum++;
+    });
+
+    // 添加标签
+    function tagsAdd(i) {
+        var html = '<div class="tags-clone"> \
+                <h1 class="tags" >tags';
+            html += '</h1><div class="form-group tags col-md-6"> \
+            <label>name</label> \
+            <input type="name" class="form-control" name="tags['+ i +'][name]" \
+            placeholder="description"> \
+                <small class="form-text text-muted">名称</small> \
+            </div> \
+            <div class="form-group tags col-md-6"> \
+            <label>description</label> \
+            <input type="description" class="form-control" name="tags['+ i +'][description]" \
+            placeholder="description"> \
+                <small class="form-text text-muted">标签描述</small> \
+            </div> \
+            <h2 class="tags col-md-12">┗ externalDocs</h2> \
+        <div class="form-group tags col-md-6"> \
+            <label>description</label> \
+            <input type="description" class="form-control" name="tags['+ i +'][externalDocs][description]" \
+            placeholder="description"> \
+                <small class="form-text text-muted">扩展文档描述</small> \
+            </div> \
+            <div class="form-group tags col-md-6"> \
+            <label>url</label> \
+            <input type="url" class="form-control" name="tags['+ i +'][externalDocs][url]" \
+            placeholder="url"> \
+                <small class="form-text text-muted">扩展文档链接</small> \
+            </div> \
+            </div>';
+        $('#tags-clone').append(html);
+    }
+
+    // 删除path
+    function pathRemove(i){
+        $('.path-clone')[i].remove();
+    }
+    // 增加path
+    function pathAdd(i){
+        var html = '<div class="path-clone"> \
+                <h1 class="path" >path-' + i;
+        if(0 != i){
+            html += ' <small><span class="glyphicon glyphicon-remove-circle" onclick="pathRemove('+i+')"></span></small>';
+        }
+        html += '</h1>';
+        html += '\
+            <div class="form-group path col-md-6"> \
+            <label>接口地址</label> \
+            <input type="description" class="form-control" name="path['+ i +'][path]" \
+            placeholder="path"> \
+                <small class="form-text text-muted">接口地址</small> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>type</label> \
+            <select name="type" class="select2 form-control"> \
+            <option value="post">post</option> \
+            <option value="get">get</option> \
+            <option value="put">put</option> \
+            <option value="delete">delete</option> \
+            </select> \
+            <small class="form-text text-muted">接口类型</small> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>tags</label> \
+            <select name="type" class="select2 form-control"> \
+            <option value="post">post</option> \
+            <option value="get">get</option> \
+            <option value="put">put</option> \
+            <option value="delete">delete</option> \
+            </select> \
+            <small class="form-text text-muted">标签</small> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>description</label> \
+            <input type="description" class="form-control" name="path['+ i +'][description]" \
+            placeholder="description"> \
+                <small class="form-text text-muted">描述</small> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>consumes</label> \
+            <select name="type" class="select2 form-control" multiple > \
+            <option value="application/json">application/json</option> \
+            <option value="application/xml">application/xml</option> \
+            </select> \
+            </div> \
+            <h2 class="path col-md-12">┗ parameters</h2> \
+            <div class="form-group path col-md-6"> \
+            <label>in</label> \
+            <select name="in" class="select2">\
+            <option value="body"></option>\
+            <option value="path"></option>\
+            </select>\
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>name</label> \
+            <input type="name" class="form-control" name="path['+ i +'][parameters][name]" \
+            placeholder="name"> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>description</label> \
+            <input type="description" class="form-control" name="path['+ i +'][parameters][description]" \
+            placeholder="description"> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>required</label> \
+            <input type="checkbox" class="form-control switch" name="path['+ i +'][parameters][required]" \
+            placeholder="required"   checked> \
+            </div> \
+            </div>';
+        $('#path-clone').append(html);
+        $('.select2').select2({});
+        $('.switch').bootstrapSwitch({});
+    }
 
 </script>
 </body>
