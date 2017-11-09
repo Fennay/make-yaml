@@ -327,7 +327,7 @@
             </div> \
             <div class="form-group path col-md-6"> \
             <label>tags</label> \
-            <select name="type" class="select2 form-control"> \
+            <select name="path['+ i +'][type]" class="select2 form-control"> \
             <option value="post">post</option> \
             <option value="get">get</option> \
             <option value="put">put</option> \
@@ -351,9 +351,9 @@
             <h2 class="path col-md-12">┗ parameters</h2> \
             <div class="form-group path col-md-6"> \
             <label>in</label> \
-            <select name="in" class="select2">\
-            <option value="body"></option>\
-            <option value="path"></option>\
+            <select name="path['+ i +'][parameters][in]" class="select2 form-control">\
+                <option value="body">body</option>\
+                <option value="path">path</option>\
             </select>\
             </div> \
             <div class="form-group path col-md-6"> \
@@ -369,7 +369,12 @@
             <div class="form-group path col-md-6"> \
             <label>required</label> \
             <input type="checkbox" class="form-control switch" name="path['+ i +'][parameters][required]" \
-            placeholder="required"   checked> \
+            placeholder="required" checked data-on-text="true" data-off-text="false"> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>schema</label> \
+            <input type="schema" class="form-control" name="path['+ i +'][parameters][schema]" \
+            placeholder="schema"> \
             </div> \
             </div>';
         $('#path-clone').append(html);
