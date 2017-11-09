@@ -27,9 +27,10 @@ class MakeYaml
 
 $get = $_GET;
 echo '<pre>';
-print_r($get);
 unset($get['s']);
+
+print_r($get);die;
 $yaml = handle($get);
-$name = 'test233.yaml';
+$name = 'test2433.yaml';
 $makeYaml = new MakeYaml();
 $makeYaml->run($yaml,$name);
