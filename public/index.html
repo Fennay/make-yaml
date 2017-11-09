@@ -153,12 +153,12 @@
                        placeholder="title">
                 <small class="form-text text-muted">标题</small>
             </div>
-            <div class="form-group info col-md-6" style="display: none">
-                <label>termsOfService</label>
-                <input type="text" class="form-control" name="info[termsOfService]"
-                       placeholder="termsOfService">
-                <small class="form-text text-muted">termsOfService</small>
-            </div>
+            <!--<div class="form-group info col-md-6" style="display: none">-->
+                <!--<label>termsOfService</label>-->
+                <!--<input type="text" class="form-control" name="info[termsOfService]"-->
+                       <!--placeholder="termsOfService">-->
+                <!--<small class="form-text text-muted">termsOfService</small>-->
+            <!--</div>-->
             <div class="form-group info col-md-6" style="display: none">
                 <label>Description</label>
                 <textarea class="form-control" name="info[description]"></textarea>
@@ -270,7 +270,7 @@
             html += '</h1><div class="form-group tags col-md-6"> \
             <label>name</label> \
             <input type="name" class="form-control" name="tags['+ i +'][name]" \
-            placeholder="description"> \
+            placeholder="name"> \
                 <small class="form-text text-muted">名称</small> \
             </div> \
             <div class="form-group tags col-md-6"> \
@@ -278,19 +278,6 @@
             <input type="description" class="form-control" name="tags['+ i +'][description]" \
             placeholder="description"> \
                 <small class="form-text text-muted">标签描述</small> \
-            </div> \
-            <h2 class="tags col-md-12">┗ externalDocs</h2> \
-        <div class="form-group tags col-md-6"> \
-            <label>description</label> \
-            <input type="description" class="form-control" name="tags['+ i +'][externalDocs][description]" \
-            placeholder="description"> \
-                <small class="form-text text-muted">扩展文档描述</small> \
-            </div> \
-            <div class="form-group tags col-md-6"> \
-            <label>url</label> \
-            <input type="url" class="form-control" name="tags['+ i +'][externalDocs][url]" \
-            placeholder="url"> \
-                <small class="form-text text-muted">扩展文档链接</small> \
             </div> \
             </div>';
         $('#tags-clone').append(html);
@@ -302,7 +289,7 @@
     }
     // 增加path
     function pathAdd(i){
-        var html = '<div class="path-clone"> \
+        var html = '<div class="clear-fix"></div><div class="path-clone"> \
                 <h1 class="path" >path-' + i;
         if(0 != i){
             html += ' <small><span class="glyphicon glyphicon-remove-circle" onclick="pathRemove('+i+')"></span></small>';
@@ -317,7 +304,7 @@
             </div> \
             <div class="form-group path col-md-6"> \
             <label>type</label> \
-            <select name="type" class="select2 form-control"> \
+            <select name="path['+ i +'][type]" class="select2 form-control"> \
             <option value="post">post</option> \
             <option value="get">get</option> \
             <option value="put">put</option> \
@@ -327,7 +314,7 @@
             </div> \
             <div class="form-group path col-md-6"> \
             <label>tags</label> \
-            <select name="path['+ i +'][type]" class="select2 form-control"> \
+            <select name="path['+ i +'][tags]" class="select2 form-control"> \
             <option value="post">post</option> \
             <option value="get">get</option> \
             <option value="put">put</option> \
@@ -354,6 +341,7 @@
             <select name="path['+ i +'][parameters][in]" class="select2 form-control">\
                 <option value="body">body</option>\
                 <option value="path">path</option>\
+                <option value="query">query</option>\
             </select>\
             </div> \
             <div class="form-group path col-md-6"> \
@@ -369,7 +357,7 @@
             <div class="form-group path col-md-6"> \
             <label>required</label> \
             <input type="checkbox" class="form-control switch" name="path['+ i +'][parameters][required]" \
-            placeholder="required" checked data-on-text="true" data-off-text="false"> \
+            placeholder="required" checked data-on-text="必填" data-off-text="非必填" value="true"> \
             </div> \
             <div class="form-group path col-md-6"> \
             <label>schema</label> \

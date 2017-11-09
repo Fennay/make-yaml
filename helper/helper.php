@@ -11,11 +11,11 @@
  * @param $data
  * @return mixed
  */
-function handle($data)
+function removeEmpty($data)
 {
     foreach ($data as $k => $v) {
         if(is_array($v)) {
-            $data[$k] = handle($v);
+            $data[$k] = removeEmpty($v);
         }
         // 删除空元素
         if(empty($v) || ( 0 == count($data[$k]))) {
