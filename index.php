@@ -12,17 +12,15 @@ class MakeYaml
     protected $data;
     protected $fileName;
 
-    public function __construct($getData,$fileName='')
+    public function __construct($getData,$fileName='test.yaml')
     {
         $data = [];
         $data['swagger'] = '2.0';
         $data['info'] = $getData['info'];
         $data['paths'] = $this->handlePath($getData['path']);
-        $fileName = '12312313.yaml';
         $this->data = $data;
         $this->fileName = $fileName;
         echo '<pre>';
-        print_r($this->data);
     }
 
     public function run()
@@ -36,8 +34,6 @@ class MakeYaml
             $this->data = removeEmpty($this->data);
             $value = Spyc::YAMLDump($this->data, 1, 60, true);
             print_r($value);
-            // 写入文件
-            // file_put_contents('./yaml/' . $this->fileName, $value);
         } catch (Exception $exe) {
             var_dump($exe->getMessage());
         }
@@ -54,11 +50,11 @@ class MakeYaml
     {
         $newPath = [];
         foreach ($path as $k => $v) {
-            $key = $v['path'] . $v['type'];
-            $newPath[$key]['tags'] = $v['tags'];
-            $newPath[$key]['description'] = $v['description'];
-            $newPath[$key]['parameters'] = $v['parameters'];
-            $newPath[$key]['consumes'] = $v['consumes'];
+            $key = $v['path'];
+            $newPath[$key][$v['type']]['tags'][0] = $v['tags'];
+            $newPath[$key][$v['type']]['description'] = $v['description'];
+            $newPath[$key][$v['type']]['parameters'] = $v['parameters'];
+            $newPath[$key][$v['type']]['consumes'] = $v['consumes'];
 
         }
 
@@ -74,6 +70,6 @@ class MakeYaml
 // print_r($get);
 // die;
 // $yaml = removeEmpty($get);
-$name = 'test2433.yaml';
+$name = 'test.yaml';
 $makeYaml = new MakeYaml($_GET, $name);
 $makeYaml->run();

@@ -289,6 +289,7 @@
     }
     // 增加path
     function pathAdd(i){
+        var j = 0;
         var html = '<div class="clear-fix"></div><div class="path-clone"> \
                 <h1 class="path" >path-' + i;
         if(0 != i){
@@ -313,16 +314,6 @@
             <small class="form-text text-muted">接口类型</small> \
             </div> \
             <div class="form-group path col-md-6"> \
-            <label>tags</label> \
-            <select name="path['+ i +'][tags]" class="select2 form-control"> \
-            <option value="post">post</option> \
-            <option value="get">get</option> \
-            <option value="put">put</option> \
-            <option value="delete">delete</option> \
-            </select> \
-            <small class="form-text text-muted">标签</small> \
-            </div> \
-            <div class="form-group path col-md-6"> \
             <label>description</label> \
             <input type="description" class="form-control" name="path['+ i +'][description]" \
             placeholder="description"> \
@@ -338,7 +329,7 @@
             <h2 class="path col-md-12">┗ parameters</h2> \
             <div class="form-group path col-md-6"> \
             <label>in</label> \
-            <select name="path['+ i +'][parameters][in]" class="select2 form-control">\
+            <select name="path['+ i +'][parameters]['+ j +'][in]" class="select2 form-control">\
                 <option value="body">body</option>\
                 <option value="path">path</option>\
                 <option value="query">query</option>\
@@ -346,22 +337,22 @@
             </div> \
             <div class="form-group path col-md-6"> \
             <label>name</label> \
-            <input type="name" class="form-control" name="path['+ i +'][parameters][name]" \
+            <input type="name" class="form-control" name="path['+ i +'][parameters]['+ j +'][name]" \
             placeholder="name"> \
             </div> \
             <div class="form-group path col-md-6"> \
             <label>description</label> \
-            <input type="description" class="form-control" name="path['+ i +'][parameters][description]" \
+            <input type="description" class="form-control" name="path['+ i +'][parameters]['+ j +'][description]" \
             placeholder="description"> \
             </div> \
             <div class="form-group path col-md-6"> \
             <label>required</label> \
-            <input type="checkbox" class="form-control switch" name="path['+ i +'][parameters][required]" \
+            <input type="checkbox" class="form-control switch" name="path['+ i +'][parameters]['+ j +'][required]" \
             placeholder="required" checked data-on-text="必填" data-off-text="非必填" value="true"> \
             </div> \
             <div class="form-group path col-md-6"> \
             <label>schema</label> \
-            <input type="schema" class="form-control" name="path['+ i +'][parameters][schema]" \
+            <input type="schema" class="form-control" name="path['+ i +'][parameters]['+ j +'][schema]" \
             placeholder="schema"> \
             </div> \
             </div>';
