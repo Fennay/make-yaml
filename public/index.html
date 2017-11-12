@@ -28,13 +28,9 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <h1>Easy To Make Swagger Yaml</h1>
-    </div>
-    <div class="row">
-        <h2>可选内容</h2>
-    </div>
-    <div class="row">
+    <div class="row navbar navbar-default navbar-fixed-top" style="padding:0 0 20px 80px;font-size: 16px;">
+        <h1 style="font-size: 14px;margin-top: 10px;">Easy To Make Swagger Yaml</h1>
+        <h2 style="font-size: 16px;">可选内容</h2>
         <!--Info-->
         <div class="btn-group">
             <button type="button" class="btn btn-success" id="Info-btn">Info</button>
@@ -130,7 +126,7 @@
             </ul>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin: 180px 0 0 0 ;">
         <form action="index.php" method="get">
             <div class="form-group">
                 <label for="exampleInputEmail1">Swagger</label>
@@ -207,6 +203,7 @@
                     https &nbsp;&nbsp; <input type="checkbox" class="switch" name="schemes[]" value="https">
                 </label>
             </div>
+            <div class="clear-fix"></div>
             <!--tags start-->
             <div id="tags-clone">
 
@@ -289,6 +286,7 @@
     function pathRemove(i) {
         $('.path-clone')[i].remove();
     }
+
     // 增加path
     function pathAdd(i) {
         var j = 0;
@@ -337,9 +335,22 @@
         $('.switch').bootstrapSwitch({});
     }
 
+    /**
+     * 删除参数
+     * @param i
+     */
+    function paraRemove(i) {
+        $('#parameters' + i).remove();
+    }
+
+    /**
+     * 增加参数
+     * @param i
+     */
     function paraAdd(i) {
         var j = 0;
-        var html = '<h2 class="path col-md-12">┗ parameters</h2> \
+        var html = '<h2 class="path col-md-12">┗ parameters ['+ i +']';
+        html += '&nbsp;&nbsp;<small><span class="glyphicon glyphicon-remove-circle" onclick="paraRemove('+ j +')"></span></small></h2> \
             <div class="form-group path col-md-6"> \
             <label>in</label> \
             <select name="path[' + i + '][parameters][' + j + '][in]" class="select2 form-control">\
@@ -373,6 +384,7 @@
         $('.select2').select2();
         $('.switch').bootstrapSwitch({});
     }
+
 
 </script>
 </body>
