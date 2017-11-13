@@ -12,7 +12,7 @@ class MakeYaml
     protected $data;
     protected $fileName;
 
-    public function __construct($getData,$fileName='test.yaml')
+    public function __construct($getData, $fileName = 'test.yaml')
     {
         $data = [];
         $data['swagger'] = '2.0';
@@ -20,29 +20,31 @@ class MakeYaml
         $data['paths'] = $this->handlePath($getData['path']);
         $this->data = $data;
         $this->fileName = $fileName;
-        echo '<pre>';
     }
 
     public function run()
     {
         // 如果没有版本，自动加上swagger2
-        if(empty($this->data['swagger'])) {
+        if (empty($this->data['swagger'])) {
             $this->data['swagger'] = 2;
         }
         try {
             // 移除所有空元素
             $this->data = removeEmpty($this->data);
             $value = Spyc::YAMLDump($this->data, 1, 60, true);
-            print_r($value);
         } catch (Exception $exe) {
             var_dump($exe->getMessage());
         }
 
-        // echo '执行成功';
+        $returnData = [
+            'status' => 'success',
+            'info'   => '转换成功',
+            'data'   => $value
+        ];
+        echo json_encode($returnData);
     }
 
     /**
-     *
      * @param $path
      * @return array
      */
@@ -59,6 +61,32 @@ class MakeYaml
         }
 
         return $newPath;
+    }
+
+    protected function licenses()
+    {
+        $arr = [
+            'MIT' => 'https://opensource.org/licenses/MIT',
+            'Apache2.0' => 'https://opensource.org/licenses/Apache-2.0',
+            'BSD3' => 'https://opensource.org/licenses/BSD-3-Clause',
+            'BSD2' => 'https://opensource.org/licenses/BSD-2-Clause',
+            'GPL' => 'https://opensource.org/licenses/gpl-license',
+            'Mozilla' => 'https://opensource.org/licenses/MPL-2.0',
+            'LGPL' => 'https://opensource.org/licenses/lgpl-license',
+        ];
+    }
+
+    /**
+     * @param $fileName
+     * @param $data
+     * @author: Mikey
+     */
+    public function display($fileName, $data)
+    {
+        $base = 'view/';
+        $fileName = empty($fileName) ? 'index.html' : $fileName;
+        $html = file_get_contents($base . $fileName);
+        echo $html;
     }
 }
 
