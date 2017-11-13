@@ -25,6 +25,7 @@
     <script type="text/javascript" src="resource/syntaxHighlighter/scripts/shBrushJScript.js"></script>
     <link type="text/css" rel="stylesheet" href="resource/syntaxHighlighter/styles/shCoreDefault.css"/>
     <script type="text/javascript">SyntaxHighlighter.all();</script>
+
     <style>
         .clear-fix {
             clear: both;
@@ -131,7 +132,7 @@
             </ul>
         </div>
     </div>
-    <div class="row" style="margin: 180px 0 0 0 ;">
+    <div class="row" style="margin: 160px 0 0 0 ;">
         <form method="get" id="form">
             <div class="form-group">
                 <label for="exampleInputEmail1">Swagger</label>
@@ -145,7 +146,7 @@
             <div class="form-group info col-md-6" style="display: none">
                 <label>version</label>
                 <input type="text" class="form-control" name="info[version]"
-                       placeholder="version">
+                       placeholder="version" value="1.0">
                 <small class="form-text text-muted">接口版本</small>
             </div>
             <div class="form-group info col-md-6" style="display: none">
@@ -173,10 +174,8 @@
                 <small class="form-text text-muted">邮箱</small>
             </div>
             <h2 class="info col-md-12" style="display: none">┗ license</h2>
-            <div class="form-group info col-md-6" style="display: none">
+            <div class="form-group info col-md-12" style="display: none">
                 <label>name</label>
-                <!--<input type="name" class="form-control" name="info[license][name]"-->
-                       <!--placeholder="name">-->
                 <select name="info[license][name]" class="form-control select2">
                     <option value="MIT">MIT</option>
                     <option value="MIT">Apache2.0</option>
@@ -189,9 +188,11 @@
             <div class="clear-fix"></div>
             <!--host start-->
             <div class="form-group" id="host" style="display: none">
-                <label>host</label>
-                <input type="text" class="form-control" name="host"
-                       placeholder="host">
+                <label for="basic-url">host</label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">http:</span>
+                    <input type="text" class="form-control" id="basic-url" name="host" aria-describedby="basic-addon3">
+                </div>
             </div>
             <!--basePath-->
             <div class="form-group" id="basePath" style="display: none">
@@ -201,7 +202,7 @@
             </div>
             <!--schemes-->
             <div class="form-check" id="schemes" style="display: none">
-                <p><label>host</label></p>
+                <p><label>schemes</label></p>
                 <label class="col-md-3">
                     http &nbsp;&nbsp; <input type="checkbox" class="switch" name="schemes[]" value="http">
                 </label>
@@ -232,7 +233,8 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="myModalLabel">愉快的输出</h4>
             </div>
             <div class="modal-body">
@@ -240,7 +242,23 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">复制</button>
+                <button type="button" class="btn btn-primary" id="copy">复制</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSuccess">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabelSuccess">复制成功</h4>
+            </div>
+            <div class="modal-body">
+                <span class="glyphicon glyphicon-ok-circle success" style="color:green;"></span> 复制成功
             </div>
         </div>
     </div>
@@ -255,10 +273,10 @@
 <!--引入switch-->
 <script src="resource/switch/bootstrap-switch.min.js"></script>
 <script src="resource/select2/select2.full.min.js"></script>
+<!--复制插件-->
+<script src="resource/zeroclipboard/ZeroClipboard.min.js"></script>
 <script>
     // switch
-
-
     function showAndHide(selector, op) {
         $(op).click(function () {
             if ($(selector).is(':hidden')) {//如果当前隐藏
@@ -375,8 +393,8 @@
      */
     function paraAdd(i) {
         var j = 0;
-        var html = '<h2 class="path col-md-12">┗ parameters ['+ i +']';
-        html += '&nbsp;&nbsp;<small><span class="glyphicon glyphicon-remove-circle" onclick="paraRemove('+ j +')"></span></small></h2> \
+        var html = '<h2 class="path col-md-12">┗ parameters [' + i + ']';
+        html += '&nbsp;&nbsp;<small><span class="glyphicon glyphicon-remove-circle" onclick="paraRemove(' + j + ')"></span></small></h2> \
             <div class="form-group path col-md-6"> \
             <label>in</label> \
             <select name="path[' + i + '][parameters][' + j + '][in]" class="select2 form-control">\
@@ -412,29 +430,63 @@
     }
 
 
-
     $('#submit').click(function () {
         var data = $('#form').serializeArray();
         var url = '/index.php';
 
         $.ajax({
-            type:'get',
-            url:url,
-            data:data,
-            dataType:'json',
-            success:function (j) {
-                if('success' === j.status){
-                    $('.modal-body').html('<pre class="brush: YAML;">' + j.data + '</pre>');
+            type: 'get',
+            url: url,
+            data: data,
+            dataType: 'json',
+            success: function (j) {
+                if ('success' === j.status) {
+                    $('#myModal .modal-body').html('<pre class="brush: YAML;">' + j.data + '</pre>');
                     $('#myModal').modal('show');
-                }else{
+                } else {
                     alert('转换失败')
                 }
             },
-            error:function () {
+            error: function () {
                 alert('系统错误');
             }
-            
+
         });
+    });
+
+
+    //    $(function(){
+    //        $('#copy').zclip({
+    //            path: 'https://cdn.bootcss.com/zclip/1.1.2/ZeroClipboard.swf',
+    //            copy: function(){//复制内容
+    //                return $('#myModal .modal-body').text();
+    //            },
+    //            afterCopy: function(){//复制成功
+    ////                $("<span id='msg'/>").insertAfter($('#copy_input')).text('复制成功');
+    //                alert('复制成功');
+    //            }
+    //        });
+    //    });
+
+    var client = new ZeroClipboard($('#copy'));
+    console.log(client);
+    client.on('ready', function (event) {
+//        console.log('movie is loaded');
+
+        client.on('copy', function (event) {
+            var data = $('#myModal .modal-body').text();
+            event.clipboardData.setData('text/plain', data);
+        });
+
+        client.on('aftercopy', function (event) {
+//            console.log('Copied text to clipboard: ' + event.data['text/plain']);
+//            $('#myModal').hide();
+            $('#success').modal();
+        });
+    });
+
+    client.on('error', function (event) {
+        ZeroClipboard.destroy();
     });
 
 </script>
