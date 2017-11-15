@@ -306,13 +306,17 @@
         pathNum++;
     });
 
+
     // 添加标签
     function tagsAdd(i) {
         var html = '<div class="tags-clone"> \
-                <h1 class="tags" >tags';
+                <h1 class="tags" >tags[' + i + ']';
+        if (0 != i) {
+            html += ' <small><span class="glyphicon glyphicon-remove-circle" onclick="tagsRemove(' + i + ')"></span></small>';
+        }
         html += '</h1><div class="form-group tags col-md-6"> \
             <label>name</label> \
-            <input type="name" class="form-control" name="tags[' + i + '][name]" \
+            <input type="name" class="form-control" name="tags[' + i + '][name]" date-type="tagName"\
             placeholder="name"> \
                 <small class="form-text text-muted">名称</small> \
             </div> \
@@ -327,15 +331,40 @@
     }
 
     // 删除path
+    function tagsRemove(i) {
+        $('.tags-clone')[i].remove();
+    }
+    // 删除path
     function pathRemove(i) {
         $('.path-clone')[i].remove();
+    }
+
+    $('#tags-clone').on('blur','input[name$="[name]"]',function () {
+        // 添加tags
+        var tagsList = getTagsList();
+        var tagHtml = '';
+        for (var i = 0; i < tagsList.length; i++) {
+            tagHtml += '<option value="' + tagsList[i] + '">' + tagsList[i] + '</option>';
+        }
+        $('.path-tags').html(tagHtml);
+    });
+
+    function getTagsList() {
+        var len = $('input[name$="[name]"]').size();
+        console.log(len);
+        var tagList = [];
+        for (var i = 0; i < len; i++) {
+            tagList[i] = $('input[name$="[name]"]').eq(i).val();
+        }
+
+        return tagList;
     }
 
     // 增加path
     function pathAdd(i) {
         var j = 0;
         var html = '<div class="clear-fix"></div><div class="path-clone"> \
-                <h1 class="path" >path-' + i;
+                <h1 class="path" >path[' + i + ']';
         if (0 != i) {
             html += ' <small><span class="glyphicon glyphicon-remove-circle" onclick="pathRemove(' + i + ')"></span></small>';
         }
@@ -354,6 +383,12 @@
             <option value="get">get</option> \
             <option value="put">put</option> \
             <option value="delete">delete</option> \
+            </select> \
+            <small class="form-text text-muted">接口类型</small> \
+            </div> \
+            <div class="form-group path col-md-6"> \
+            <label>tag</label> \
+            <select name="path[' + i + '][]" class="select2 form-control path-tags"> \
             </select> \
             <small class="form-text text-muted">接口类型</small> \
             </div> \
@@ -377,6 +412,17 @@
         $('#path-clone').append(html);
         $('.select2').select2();
         $('.switch').bootstrapSwitch({});
+
+        // 添加tags
+        var tagsList = getTagsList();
+        console.log(tagsList);
+        var tagHtml = '';
+        for (var i = 0; i < tagsList.length; i++) {
+            console.log(tagsList[i]);
+            tagHtml += '<option value="' + tagsList[i] + '">' + tagsList[i] + '</option>';
+        }
+        $('.path-tags').html(tagHtml);
+
     }
 
     /**
@@ -469,7 +515,7 @@
     //    });
 
     var client = new ZeroClipboard($('#copy'));
-    console.log(client);
+
     client.on('ready', function (event) {
 //        console.log('movie is loaded');
 
